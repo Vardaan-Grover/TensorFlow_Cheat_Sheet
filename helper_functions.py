@@ -286,3 +286,34 @@ def calculate_results(y_true, y_pred):
                   "recall": model_recall,
                   "f1": model_f1}
   return model_results
+
+# Function to visualize the embedding matrix
+def visualize_embedding(vocab, weights):
+  '''
+  This function takes the `vocab` and `weights` arguments, and downloads 2 files namely "vectors.tsv" and "metadata.tsv" that
+  can later be fed to projector.tensorflow.org to visualize the embedding matrix in a 3d plane.
+  Args:
+      weights: the weight stored in the embedding layer of your model after training. You can store these weights using the 
+               `model.get_layer(embedding_layer_name).get_weights()` function
+      vocab: the different unique words stored in the tokenization / text_vectorization layer. You can get this data structure by
+             calling the `text_vectorization_layer.get_vocabulary()` function
+  '''
+  import io
+  out_v = io.open('vectors.tsv', 'w', encoding='utf-8')
+  out_m = io.open('metadata.tsv', 'w', encoding='utf-8')
+
+  for index, word in enumerate(vocab):
+    if index == 0:
+      continue  # skip 0, it's padding.
+    vec = weights[index]
+    out_v.write('\t'.join([str(x) for x in vec]) + "\n")
+    out_m.write(word + "\n")
+  out_v.close()
+  out_m.close()
+
+  try:
+    from google.colab import files
+    files.download('vectors.tsv')
+    files.download('metadata.tsv')
+  except Exception:
+    pass
