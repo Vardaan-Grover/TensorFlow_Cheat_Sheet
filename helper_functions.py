@@ -317,3 +317,18 @@ def visualize_embedding(vocab, weights):
     files.download('metadata.tsv')
   except Exception:
     pass
+
+  
+# Create a function to read the lines of a document
+def get_lines(filename):
+    '''
+    Reads filename (a text filename) and returns the lines of text as a list.
+
+    Args:
+      filename: a string containing the target filepath.
+
+    Returns:
+      A list of strings with one string per line from the target filename.
+    '''
+    with open(filename, 'r') as f:
+        return f.readlines()
