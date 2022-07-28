@@ -356,3 +356,11 @@ def get_dataset_partitions(ds, train_split=0.8, val_split=0.1, test_split=0.1, s
     test_ds = ds.skip(train_size).skip(val_size)
     
     return train_ds, val_ds, test_ds
+
+# Create a function to implement a ModelCheckpoint callback with a specific filename
+def create_model_checkpoint(model_name, save_path='model_experiments'):
+    import os
+    return tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(save_path, model_name),
+                                              monitor='val_loss', # only output a minimum amount of text
+                                              mode='min',
+                                              save_best_only=True)
