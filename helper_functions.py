@@ -332,31 +332,7 @@ def get_lines(filename):
     '''
     with open(filename, 'r') as f:
         return f.readlines()
-      
-# Create a function to split a tf.data.Dataset instance into train, val and test splits
-def get_dataset_partitions(ds, train_split=0.8, val_split=0.1, test_split=0.1, shuffle=True, shuffle_size=10000):
-  '''
-  Takes in a tf.data.Dataset instance and splits it into different tf.data.Dataset instances for the purpose of train, val and test splits.
-  
-  Returns
-    3 Datasets in the order: `train_ds, val_ds, test_ds`
-  '''
-    ds_size = ds.cardinality().numpy()
-    assert (train_split + test_split + val_split) == 1
-    
-    if shuffle:
-        # Specify seed to always have the same split distribution between runs
-        ds = ds.shuffle(shuffle_size, seed=12)
-    
-    train_size = int(train_split * ds_size)
-    val_size = int(val_split * ds_size)
-    
-    train_ds = ds.take(train_size)    
-    val_ds = ds.skip(train_size).take(val_size)
-    test_ds = ds.skip(train_size).skip(val_size)
-    
-    return train_ds, val_ds, test_ds
-
+     
 # Create a function to implement a ModelCheckpoint callback with a specific filename
 def create_model_checkpoint(model_name, save_path='model_experiments'):
     import os
