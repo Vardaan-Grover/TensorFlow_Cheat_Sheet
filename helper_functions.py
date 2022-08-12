@@ -335,24 +335,24 @@ def get_lines(filename):
      
 # Create a function to implement a ModelCheckpoint callback with a specific filename
 def create_model_checkpoint(model_name, save_path='model_experiments'):
-    import os
-    return tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(save_path, model_name),
-                                              monitor='val_loss', # only output a minimum amount of text
-                                              mode='min',
-                                              save_best_only=True)
+  import os
+  return tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(save_path, model_name),
+                                            monitor='val_loss', # only output a minimum amount of text
+                                            mode='min',
+                                            save_best_only=True)
   
-  # Create a function view random images from a directory
-  def view_random_image(target_dir, target_class):
-    # Setup target directory (we'll view images from here)
-    target_folder = target_dir+target_class
+# Create a function view random images from a directory
+def view_random_image(target_dir, target_class):
+  # Setup target directory (we'll view images from here)
+  target_folder = target_dir+target_class
 
-    # Get a random image path
-    random_image = random.sample(os.listdir(target_folder), 1)
+  # Get a random image path
+  random_image = random.sample(os.listdir(target_folder), 1)
 
-    # Read in the image and plot it using matplotlib
-    img = mpimg.imread(target_folder + "/" + random_image[0])
-    plt.imshow(img)
-    plt.title(target_class)
-    plt.axis("off");
+  # Read in the image and plot it using matplotlib
+  img = mpimg.imread(target_folder + "/" + random_image[0])
+  plt.imshow(img)
+  plt.title(target_class)
+  plt.axis("off");
 
-    print(f"Image shape: {img.shape}") # show the shape of the image
+  print(f"Image shape: {img.shape}") # show the shape of the image
