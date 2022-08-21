@@ -374,3 +374,13 @@ def get_dataset_partitions(ds, train_split=0.8, val_split=0.1, test_split=0.1, s
     test_ds = ds.skip(train_size).skip(val_size)
     
     return train_ds, val_ds, test_ds
+
+# Create function to label windowed data
+def get_labelled_windows(x, horizon=1):
+  """
+  Creates labels for windowed dataset.
+
+  E.g. if horizon=1 (default)
+  Input: [1, 2, 3, 4, 5, 6] -> Output: ([1, 2, 3, 4, 5], [6])
+  """
+  return x[:, :-horizon], x[:, -horizon:]
